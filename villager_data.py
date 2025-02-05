@@ -115,7 +115,7 @@ def all_data(filename):
     with open(filename) as village_file:
         for line in village_file:
             line_split = line.split("|")
-            villager = set(line_split)
+            villager = tuple(line_split)
             all_data.append(villager)
 
 
@@ -175,3 +175,23 @@ def find_likeminded_villagers(filename, villager_name):
     """
 
     # TODO: replace this with your code
+    # Store the personality of the villager
+    personality = ""
+    likeminded_villagers = []
+    
+    file_data = all_data(filename)
+
+    # Find the personality of the input villager
+    for line in file_data:
+        if line[0].lower() == villager_name.lower():
+            personality = line[2]
+            break
+
+    # Make a list of all other villagers with same personality
+    for line in file_data:
+        if (line[2] == personality 
+            and not line[0].lower() == villager_name.lower()):
+            
+            likeminded_villagers.append(line[0])
+
+    return likeminded_villagers
