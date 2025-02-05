@@ -112,6 +112,12 @@ def all_data(filename):
     all_data = []
 
     # TODO: replace this with your code
+    with open(filename) as village_file:
+        for line in village_file:
+            line_split = line.split("|")
+            villager = set(line_split)
+            all_data.append(villager)
+
 
     return all_data
 
@@ -131,6 +137,26 @@ def find_motto(filename, villager_name):
     """
 
     # TODO: replace this with your code
+
+    # Find out if all names are unique
+    # names = []
+    # with open('villagers.csv') as v_f:
+    #     for line in v_f:
+    #         line_split = line.split('|')
+    #         names.append(line_split[0])
+    #     print(f"len names: {len(names)}")
+    #     print(f"len names: {names}")
+    #     print(f"set names: {len(set(names))}")
+    #     print(f"set names: {set(names)}")
+
+    with open(filename) as village_file:
+        for line in village_file:
+            line_split = line.split('|')
+            # If villager_name is found on the list, return their hobby
+            if line_split[0].lower() == villager_name.lower():
+                return line_split[-1]
+    # If the name is not on the list, return none
+    return None
 
 
 def find_likeminded_villagers(filename, villager_name):
