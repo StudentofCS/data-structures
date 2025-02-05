@@ -1,7 +1,5 @@
 """Functions to parse a file containing villager data."""
-import csv
 
-COLUMNS = ['name', 'species', 'hobby', 'motto']
 
 def all_species(filename):
     """Return a set of unique species in the given file.
@@ -16,7 +14,6 @@ def all_species(filename):
     species = set()
 
     # TODO: replace this with your code
-    # Looked up csv documentation on python.org
     village_file = open(filename)
     
     for line in village_file:
@@ -40,6 +37,22 @@ def get_villagers_by_species(filename, search_string="All"):
     villagers = []
 
     # TODO: replace this with your code
+    # Open csv file
+    village_file = open(filename)
+
+    # If search string is all, return all names
+    if search_string == "All":
+        for line in village_file:
+            line_split = line.split('|')
+            villagers.append(line_split[0])
+    
+    # Else only return names of specific species
+    else:
+        for line in village_file:
+            line_split = line.split('|')
+            if search_string.lower() == line_split[1].lower():
+                villagers.append(line_split[0])
+
 
     return sorted(villagers)
 
@@ -55,8 +68,32 @@ def all_names_by_hobby(filename):
     """
 
     # TODO: replace this with your code
+    villagers_by_hobby = []
 
-    return []
+    hobbies = set()
+    hobbies_and_names = ()
+
+    with open(filename) as village_file:
+    
+        # Make a set of the hobbies on the csv file
+        for line in village_file:
+            line_split = line.split('|')
+            hobbies.add(line_split[3])
+            # Make a tuple of the hobbies and names of villagers
+            hobbies_and_names = hobbies_and_names + (line_split[3], 
+                                                     line_split[0])
+            
+    for hobby in hobbies:
+        villagers = []
+        for i in range(0, len(hobbies_and_names), 2):
+
+            # If hobby is same as hobbies set, add villagers name to list
+            if hobby.lower() == hobbies_and_names[i].lower():
+                villagers.append(hobbies_and_names[i + 1])
+        # Add villagers list to the villagers_by_hobby list
+        villagers_by_hobby.append(villagers)
+
+    return villagers_by_hobby
 
 
 def all_data(filename):
